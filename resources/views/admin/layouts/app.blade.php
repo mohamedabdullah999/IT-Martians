@@ -23,6 +23,7 @@
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 
     <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/particles.js@2.0.0/particles.min.js"></script>
 </head>
 
 <body class="bg-[#050B14] text-slate-300 antialiased selection:bg-cyan-500 selection:text-white" x-data="{ sidebarOpen: false }">
@@ -32,11 +33,13 @@
         $settings = $settingManager->getAllSettings();
     @endphp
 
-    <div class="flex h-screen overflow-hidden">
+    <div class="flex h-screen overflow-hidden relative">
 
-        <aside :class="sidebarOpen ? 'translate-x-0' : 'translate-x-full'" class="sidebar-transition fixed inset-y-0 right-0 z-50 w-64 bg-[#0f172a] border-l border-slate-800 text-slate-300 shadow-[0_0_30px_rgba(0,0,0,0.8)] md:relative md:translate-x-0 flex flex-col">
+        <div id="particles-js" class="fixed inset-0 pointer-events-none" style="z-index: 0;"></div>
 
-            <div class="flex items-center justify-center h-20 border-b border-slate-800 px-4">
+        <aside :class="sidebarOpen ? 'translate-x-0' : 'translate-x-full'" class="sidebar-transition fixed inset-y-0 right-0 z-50 w-64 bg-[#0f172a]/95 backdrop-blur-xl border-l border-slate-800 text-slate-300 shadow-[0_0_30px_rgba(0,0,0,0.8)] md:relative md:translate-x-0 flex flex-col">
+
+            <div class="flex items-center justify-center h-20 border-b border-slate-800 px-4 relative z-10">
                 <div class="flex items-center gap-3">
                     <div class="w-10 h-10 rounded-full bg-[#1e1a3b] overflow-hidden shrink-0 shadow-[0_0_15px_rgba(34,211,238,0.3)] border border-cyan-500/50">
                         <img src="{{ asset($settings['site_logo'] ?? 'https://images.unsplash.com/photo-1552664730-d307ca884978?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80') }}" alt="Logo" class="w-full h-full object-cover">
@@ -45,7 +48,7 @@
                 </div>
             </div>
 
-            <nav class="flex-1 px-4 py-6 space-y-2 overflow-y-auto">
+            <nav class="flex-1 px-4 py-6 space-y-2 overflow-y-auto relative z-10">
 
                 <a href="{{ route('admin.dashboard') }}" class="flex items-center gap-3 px-4 py-3 rounded-xl transition-all {{ request()->routeIs('admin.dashboard') ? 'bg-gradient-to-r from-purple-600/20 to-cyan-600/20 border border-cyan-500/30 text-cyan-300 shadow-inner font-bold' : 'text-slate-400 hover:bg-[#1e293b] hover:text-cyan-300 font-semibold' }}">
                     <span class="text-2xl">📊</span>
@@ -81,7 +84,7 @@
 
             </nav>
 
-            <div class="p-4 border-t border-slate-800">
+            <div class="p-4 border-t border-slate-800 relative z-10">
                 <form method="POST" action="{{ route('logout') }}">
                     @csrf
                     <button type="submit" class="w-full flex items-center justify-center gap-2 px-4 py-3 bg-red-900/40 border border-red-500/30 hover:bg-red-600 text-red-400 hover:text-white rounded-xl transition-all font-bold shadow-md">
@@ -94,9 +97,9 @@
 
         <div x-show="sidebarOpen" @click="sidebarOpen = false" x-transition.opacity class="fixed inset-0 z-40 bg-black/70 backdrop-blur-sm md:hidden"></div>
 
-        <div class="flex-1 flex flex-col overflow-hidden bg-[#050B14] relative">
+        <div class="flex-1 flex flex-col overflow-hidden bg-transparent relative z-10">
 
-            <header class="h-20 bg-[#0f172a]/80 backdrop-blur-md border-b border-slate-800 flex items-center justify-between px-6 z-10 relative">
+            <header class="h-20 bg-[#0f172a]/80 backdrop-blur-md border-b border-slate-800 flex items-center justify-between px-6 z-20 relative">
 
                 <button @click="sidebarOpen = !sidebarOpen" class="md:hidden text-cyan-400 hover:text-purple-400 focus:outline-none transition">
                     <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M4 6h16M4 12h16M4 18h16"></path></svg>
@@ -121,7 +124,7 @@
                 </div>
             </header>
 
-            <main class="flex-1 overflow-x-hidden overflow-y-auto p-4 md:p-8 relative z-0">
+            <main class="flex-1 overflow-x-hidden overflow-y-auto p-4 md:p-8 relative z-10 bg-transparent">
 
                 @if(session('success'))
                     <div class="mb-6 bg-cyan-900/30 border border-cyan-500/50 text-cyan-300 px-4 py-4 rounded-xl shadow-[0_0_15px_rgba(34,211,238,0.2)] relative flex items-center gap-3 animate-pulse" role="alert">
@@ -136,5 +139,58 @@
         </div>
     </div>
 
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            if(window.particlesJS) {
+                particlesJS("particles-js", {
+                    "particles": {
+                        "number": {
+                            "value": 50,
+                            "density": { "enable": true, "value_area": 800 }
+                        },
+                        "color": {
+                            "value": ["#ffffff", "#22d3ee", "#a855f7"]
+                        },
+                        "shape": { "type": "circle" },
+                        "opacity": {
+                            "value": 0.4,
+                            "random": true,
+                            "anim": { "enable": true, "speed": 1, "opacity_min": 0.1, "sync": false }
+                        },
+                        "size": {
+                            "value": 2.5,
+                            "random": true,
+                            "anim": { "enable": true, "speed": 2, "size_min": 0.1, "sync": false }
+                        },
+                        "line_linked": {
+                            "enable": true,
+                            "distance": 150,
+                            "color": "#22d3ee",
+                            "opacity": 0.15,
+                            "width": 1
+                        },
+                        "move": {
+                            "enable": true,
+                            "speed": 1,
+                            "direction": "none",
+                            "random": true,
+                            "straight": false,
+                            "out_mode": "out",
+                            "bounce": false
+                        }
+                    },
+                    "interactivity": {
+                        "detect_on": "canvas",
+                        "events": {
+                            "onhover": { "enable": false },
+                            "onclick": { "enable": false },
+                            "resize": true
+                        }
+                    },
+                    "retina_detect": true
+                });
+            }
+        });
+    </script>
 </body>
 </html>
