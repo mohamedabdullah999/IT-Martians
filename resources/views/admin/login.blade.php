@@ -10,10 +10,12 @@
 </head>
 <body class="bg-[#050B14] min-h-screen flex items-center justify-center p-4 selection:bg-cyan-500 selection:text-white relative overflow-hidden">
 
-    <div class="absolute top-[-10%] left-[-10%] w-96 h-96 bg-purple-900 rounded-full mix-blend-screen filter blur-[120px] opacity-60 pointer-events-none"></div>
-    <div class="absolute bottom-[-10%] right-[-10%] w-96 h-96 bg-cyan-900 rounded-full mix-blend-screen filter blur-[120px] opacity-60 pointer-events-none"></div>
+    <div id="particles-js" class="fixed inset-0 pointer-events-none" style="z-index: 0;"></div>
 
-    <div class="bg-[#0f172a]/80 backdrop-blur-xl p-6 sm:p-10 rounded-3xl shadow-[0_10px_50px_rgba(0,0,0,0.5)] w-full max-w-md border border-purple-500/20 relative z-10">
+    <div class="absolute top-[-10%] left-[-10%] w-96 h-96 bg-purple-900 rounded-full mix-blend-screen filter blur-[120px] opacity-60 pointer-events-none" style="z-index: 0;"></div>
+    <div class="absolute bottom-[-10%] right-[-10%] w-96 h-96 bg-cyan-900 rounded-full mix-blend-screen filter blur-[120px] opacity-60 pointer-events-none" style="z-index: 0;"></div>
+
+    <div class="bg-[#0f172a]/80 backdrop-blur-xl p-6 sm:p-10 rounded-3xl shadow-[0_10px_50px_rgba(0,0,0,0.5)] w-full max-w-md border border-purple-500/20 relative" style="z-index: 10;">
 
         <div class="text-center mb-8">
             <div class="w-24 h-24 mx-auto rounded-full overflow-hidden border-2 border-cyan-400 mb-4 bg-[#1e1a3b] shadow-[0_0_20px_rgba(34,211,238,0.4)] shrink-0">
@@ -50,10 +52,64 @@
             </button>
         </form>
 
-        <div class="mt-6 text-center border-t border-white/10 pt-6">
+        <div class="mt-6 text-center border-t border-slate-700/50 pt-6">
             <a href="{{ route('home') }}" class="text-sm font-semibold text-purple-400 hover:text-cyan-300 transition">&larr; العودة للموقع الرئيسي</a>
         </div>
     </div>
 
+    <script src="https://cdn.jsdelivr.net/npm/particles.js@2.0.0/particles.min.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            if(window.particlesJS) {
+                particlesJS("particles-js", {
+                    "particles": {
+                        "number": {
+                            "value": 60,
+                            "density": { "enable": true, "value_area": 800 }
+                        },
+                        "color": {
+                            "value": ["#ffffff", "#22d3ee", "#a855f7"]
+                        },
+                        "shape": { "type": "circle" },
+                        "opacity": {
+                            "value": 0.6,
+                            "random": true,
+                            "anim": { "enable": true, "speed": 1, "opacity_min": 0.1, "sync": false }
+                        },
+                        "size": {
+                            "value": 3,
+                            "random": true,
+                            "anim": { "enable": true, "speed": 2, "size_min": 0.1, "sync": false }
+                        },
+                        "line_linked": {
+                            "enable": true,
+                            "distance": 150,
+                            "color": "#22d3ee",
+                            "opacity": 0.2,
+                            "width": 1
+                        },
+                        "move": {
+                            "enable": true,
+                            "speed": 1.5,
+                            "direction": "none",
+                            "random": true,
+                            "straight": false,
+                            "out_mode": "out",
+                            "bounce": false
+                        }
+                    },
+                    "interactivity": {
+                        "detect_on": "canvas",
+                        "events": {
+                            "onhover": { "enable": false },
+                            "onclick": { "enable": false },
+                            "resize": true
+                        }
+                    },
+                    "retina_detect": true
+                });
+            }
+        });
+    </script>
 </body>
 </html>
