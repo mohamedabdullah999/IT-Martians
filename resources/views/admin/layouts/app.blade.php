@@ -14,7 +14,6 @@
     <style>
         body { font-family: 'Cairo', sans-serif; }
         .sidebar-transition { transition: transform 0.3s ease-in-out; }
-        /* سكرول بار أنيق للسايد بار */
         ::-webkit-scrollbar { width: 6px; }
         ::-webkit-scrollbar-track { background: #050B14; }
         ::-webkit-scrollbar-thumb { background: #334155; border-radius: 10px; }
